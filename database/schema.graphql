@@ -1,0 +1,70 @@
+"""
+Set the privilege of the client
+"""
+enum ClientType {
+  BASIC
+  PREMIUM
+}
+
+input OrderInput {
+  product: String
+  price: Int
+}
+
+input EmailInput {
+  email: String
+}
+
+input ClientInput {
+  id: ID
+  name: String!
+  lastName: String!
+  company: String!
+  emails: [EmailInput]
+  age: Int!
+  clientType: ClientType!
+  orders: [OrderInput]
+}
+
+type Email {
+  email: String
+}
+type Order {
+  product: String
+  price: Int
+}
+
+"""
+Fields for Clients
+"""
+type Client {
+  id: ID
+  name: String
+  lastName: String
+  company: String
+  emails: [Email]
+  age: Int
+  clientType: ClientType
+  orders: [Order]
+}
+
+type Query {
+  getClient(id: ID): Client
+
+  getClients(limit: Int): [Client]
+}
+
+"""
+resolver's name, input with the data and data type that will be returned
+"""
+type Mutation {
+  #Mutation to create new clients
+  createClient(input: ClientInput): Client
+
+  #Mutation to update the clients
+  updateClient(input: ClientInput): Client
+
+  #Mutation to erease one client
+
+  deleteClient(id: ID!): String
+}
