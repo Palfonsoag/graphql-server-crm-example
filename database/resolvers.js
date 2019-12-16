@@ -10,7 +10,7 @@ class Client {
     this.name = name;
     this.lastName = lastName;
     this.company = company;
-    this.emails = emails;
+    this.email = email;
     this.age = age;
     this.clientType = clientType;
     this.orders = orders;
@@ -38,7 +38,7 @@ export const resolvers = {
         name: input.name,
         lastName: input.lastName,
         company: input.company,
-        emails: input.emails,
+        email: input.email,
         age: input.age,
         clientType: input.clientType,
         orders: input.orders
