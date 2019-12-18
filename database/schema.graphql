@@ -20,7 +20,7 @@ input ClientInput {
   name: String!
   lastName: String!
   company: String!
-  email: String!
+  emails: [EmailInput]
   age: Int!
   clientType: ClientType!
   orders: [OrderInput]
@@ -42,7 +42,7 @@ type Client {
   name: String
   lastName: String
   company: String
-  email: String
+  emails: [Email]
   age: Int
   clientType: ClientType
   orders: [Order]

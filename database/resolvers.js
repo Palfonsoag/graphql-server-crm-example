@@ -38,7 +38,7 @@ export const resolvers = {
         name: input.name,
         lastName: input.lastName,
         company: input.company,
-        email: input.email,
+        emails: input.emails,
         age: input.age,
         clientType: input.clientType,
         orders: input.orders
