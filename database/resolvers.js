@@ -27,8 +27,10 @@ export const resolvers = {
         });
       });
     },
-    getClients: (root, { limit }) => {
-      return Clients.find({}).limit(limit);
+    getClients: (root, { limit, offset }) => {
+      return Clients.find({})
+        .limit(limit)
+        .skip(offset);
     }
   },
   Mutation: {
