@@ -31,6 +31,14 @@ export const resolvers = {
       return Clients.find({})
         .limit(limit)
         .skip(offset);
+    },
+    totalClients: root => {
+      return new Promise((resolve, reject) => {
+        Clients.countDocuments({}, (error, count) => {
+          if (error) reject(error);
+          else resolve(count);
+        });
+      });
     }
   },
   Mutation: {
