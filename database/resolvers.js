@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Clients } from "./db";
+import { Clients, Products } from "./db";
 
 class Client {
   constructor(
@@ -81,6 +81,22 @@ export const resolvers = {
         Clients.findOneAndRemove({ _id: id }, error => {
           if (error) reject(error);
           else resolve("The Client was deleted");
+        });
+      });
+    },
+    createProduct: (root, { input }) => {
+      const newProduct = new Products({
+        name: input.name,
+        price: input.price,
+        stock: input.stock
+      });
+
+      newProduct.id = newProduct._id;
+
+      return new Promise((resolve, reject) => {
+        newProduct.save(error => {
+          if (error) reject(error);
+          else resolve(newProduct);
         });
       });
     }

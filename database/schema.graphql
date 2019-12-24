@@ -6,15 +6,24 @@ enum ClientType {
   PREMIUM
 }
 
+"""
+Order Input
+"""
 input OrderInput {
   product: String
   price: Int
 }
 
+"""
+Email Input
+"""
 input EmailInput {
   email: String
 }
 
+"""
+clients Input
+"""
 input ClientInput {
   id: ID
   name: String!
@@ -26,9 +35,26 @@ input ClientInput {
   orders: [OrderInput]
 }
 
+"""
+Products Input
+"""
+input ProductInput {
+  id: ID
+  name: String!
+  price: Int!
+  stock: Int!
+}
+
+"""
+Type of email
+"""
 type Email {
   email: String
 }
+
+"""
+type of order
+"""
 type Order {
   product: String
   price: Int
@@ -48,11 +74,27 @@ type Client {
   orders: [Order]
 }
 
+"""
+Fields for Product
+"""
+type Product {
+  id: ID
+  name: String!
+  price: Int!
+  stock: Int!
+}
+
+"""
+Resolvers -> queries
+"""
 type Query {
+  #Get a client given an ID. Return a sigle client
   getClient(id: ID): Client
 
+  #Get the full list of clients, limit and offset params are optionals, return an array of clients
   getClients(limit: Int, offset: Int): [Client]
 
+  #get the count of clients, return an string with the count
   totalClients: String
 }
 
@@ -69,4 +111,7 @@ type Mutation {
   #Mutation to erease one client
 
   deleteClient(id: ID!): String
+
+  #Mutation to Create a New Product
+  createProduct(input: ProductInput): Product
 }
