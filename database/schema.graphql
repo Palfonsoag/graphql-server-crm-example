@@ -88,30 +88,41 @@ type Product {
 Resolvers -> queries
 """
 type Query {
-  #Get a client given an ID. Return a sigle client
-  getClient(id: ID): Client
+  #Get a client given an ID. Return a single client
+  getClient(id: ID!): Client
 
   #Get the full list of clients, limit and offset params are optionals, return an array of clients
   getClients(limit: Int, offset: Int): [Client]
 
   #get the count of clients, return an string with the count
   totalClients: String
+
+  #Get the full list of products, limit and offset params are optionals, return an array of products
+  getProducts(limit: Int, offset: Int): [Product]
+
+  #Get a Product given an ID. Return a single Product
+  getProduct(id: ID!): Product
 }
 
 """
-resolver's name, input with the data and data type that will be returned
+resolver name, input with the data and data type that will be returned
 """
 type Mutation {
   #Mutation to create new clients
   createClient(input: ClientInput): Client
 
-  #Mutation to update the clients
+  #Mutation to update the client
   updateClient(input: ClientInput): Client
 
-  #Mutation to erease one client
-
+  #Mutation to erase one client
   deleteClient(id: ID!): String
 
   #Mutation to Create a New Product
   createProduct(input: ProductInput): Product
+
+  #Mutation to update the Product
+  updateProduct(input: ProductInput): Product
+
+  #Mutation to erase one Product
+  deleteProduct(id: ID!): String
 }

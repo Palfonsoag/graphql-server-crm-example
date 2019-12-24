@@ -19,6 +19,7 @@ class Client {
 
 export const resolvers = {
   Query: {
+    //get single client Query
     getClient: (root, { id }) => {
       return new Promise((resolve, reject) => {
         Clients.findById(id, (error, client) => {
@@ -27,16 +28,36 @@ export const resolvers = {
         });
       });
     },
+
+    //get Clients Query
     getClients: (root, { limit, offset }) => {
       return Clients.find({})
         .limit(limit)
         .skip(offset);
     },
+    //get Clients count Query
     totalClients: root => {
       return new Promise((resolve, reject) => {
         Clients.countDocuments({}, (error, count) => {
           if (error) reject(error);
           else resolve(count);
+        });
+      });
+    },
+
+    //get Products Query
+
+    getProducts: (root, { limit, offset }) => {
+      return Products.find({})
+        .limit(limit)
+        .skip(offset);
+    },
+    //get single Product Query
+    getProduct: (root, { id }) => {
+      return new Promise((resolve, reject) => {
+        Products.findById(id, (error, product) => {
+          if (error) reject(error);
+          else resolve(product);
         });
       });
     }
@@ -76,14 +97,20 @@ export const resolvers = {
         );
       });
     },
+
+    //delete client mutation
+
     deleteClient: (root, { id }) => {
       return new Promise((resolve, reject) => {
-        Clients.findOneAndRemove({ _id: id }, error => {
+        Clients.findOneAndDelete({ _id: id }, error => {
           if (error) reject(error);
           else resolve("The Client was deleted");
         });
       });
     },
+
+    //create Product mutation
+
     createProduct: (root, { input }) => {
       const newProduct = new Products({
         name: input.name,
@@ -97,6 +124,32 @@ export const resolvers = {
         newProduct.save(error => {
           if (error) reject(error);
           else resolve(newProduct);
+        });
+      });
+    },
+
+    //update Product mutation
+    updateProduct: (root, { input }) => {
+      return new Promise((resolve, reject) => {
+        Products.findOneAndUpdate(
+          { _id: input.id },
+          input,
+          { new: true },
+          (error, product) => {
+            if (error) reject(error);
+            else resolve(product);
+          }
+        );
+      });
+    },
+
+    //delete Product mutation
+
+    deleteProduct: (root, { id }) => {
+      return new Promise((resolve, reject) => {
+        Products.findOneAndDelete({ _id: id }, error => {
+          if (error) reject(error);
+          else resolve("The Product was deleted");
         });
       });
     }
