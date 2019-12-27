@@ -35,6 +35,7 @@ export const resolvers = {
         .limit(limit)
         .skip(offset);
     },
+
     //get Clients count Query
     totalClients: root => {
       return new Promise((resolve, reject) => {
@@ -52,6 +53,7 @@ export const resolvers = {
         .limit(limit)
         .skip(offset);
     },
+
     //get single Product Query
     getProduct: (root, { id }) => {
       return new Promise((resolve, reject) => {
@@ -60,8 +62,19 @@ export const resolvers = {
           else resolve(product);
         });
       });
+    },
+
+    //get Product count Query
+    totalProducts: root => {
+      return new Promise((resolve, reject) => {
+        Products.countDocuments({}, (error, count) => {
+          if (error) reject(error);
+          else resolve(count);
+        });
+      });
     }
   },
+
   Mutation: {
     //create client mutation
     createClient: (root, { input }) => {
@@ -99,7 +112,6 @@ export const resolvers = {
     },
 
     //delete client mutation
-
     deleteClient: (root, { id }) => {
       return new Promise((resolve, reject) => {
         Clients.findOneAndDelete({ _id: id }, error => {
@@ -110,7 +122,6 @@ export const resolvers = {
     },
 
     //create Product mutation
-
     createProduct: (root, { input }) => {
       const newProduct = new Products({
         name: input.name,
@@ -144,7 +155,6 @@ export const resolvers = {
     },
 
     //delete Product mutation
-
     deleteProduct: (root, { id }) => {
       return new Promise((resolve, reject) => {
         Products.findOneAndDelete({ _id: id }, error => {

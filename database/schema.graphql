@@ -102,6 +102,9 @@ type Query {
 
   #Get a Product given an ID. Return a single Product
   getProduct(id: ID!): Product
+
+  #get the count of product, return an string with the count
+  totalProducts: String
 }
 
 """
