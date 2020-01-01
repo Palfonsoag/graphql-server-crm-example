@@ -1,0 +1,131 @@
+"""
+Set the privilege of the client
+"""
+enum ClientType {
+  BASIC
+  PREMIUM
+}
+
+"""
+Order Input
+"""
+input OrderInput {
+  product: String
+  price: Int
+}
+
+"""
+Email Input
+"""
+input EmailInput {
+  email: String
+}
+
+"""
+clients Input
+"""
+input ClientInput {
+  id: ID
+  name: String!
+  lastName: String!
+  company: String!
+  emails: [EmailInput]
+  age: Int!
+  clientType: ClientType!
+  orders: [OrderInput]
+}
+
+"""
+Products Input
+"""
+input ProductInput {
+  id: ID
+  name: String!
+  price: Int!
+  stock: Int!
+}
+
+"""
+Type of email
+"""
+type Email {
+  email: String
+}
+
+"""
+type of order
+"""
+type Order {
+  product: String
+  price: Int
+}
+
+"""
+Fields for Clients
+"""
+type Client {
+  id: ID
+  name: String
+  lastName: String
+  company: String
+  emails: [Email]
+  age: Int
+  clientType: ClientType
+  orders: [Order]
+}
+
+"""
+Fields for Product
+"""
+type Product {
+  id: ID
+  name: String!
+  price: Int!
+  stock: Int!
+}
+
+"""
+Resolvers -> queries
+"""
+type Query {
+  #Get a client given an ID. Return a single client
+  getClient(id: ID!): Client
+
+  #Get the full list of clients, limit and offset params are optionals, return an array of clients
+  getClients(limit: Int, offset: Int): [Client]
+
+  #get the count of clients, return an string with the count
+  totalClients: String
+
+  #Get the full list of products, limit and offset params are optionals, return an array of products
+  getProducts(limit: Int, offset: Int): [Product]
+
+  #Get a Product given an ID. Return a single Product
+  getProduct(id: ID!): Product
+
+  #get the count of product, return an string with the count
+  totalProducts: String
+}
+
+"""
+resolver name, input with the data and data type that will be returned
+"""
+type Mutation {
+  #Mutation to create new clients
+  createClient(input: ClientInput): Client
+
+  #Mutation to update the client
+  updateClient(input: ClientInput): Client
+
+  #Mutation to erase one client
+  deleteClient(id: ID!): String
+
+  #Mutation to Create a New Product
+  createProduct(input: ProductInput): Product
+
+  #Mutation to update the Product
+  updateProduct(input: ProductInput): Product
+
+  #Mutation to erase one Product
+  deleteProduct(id: ID!): String
+}
