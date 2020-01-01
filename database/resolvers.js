@@ -1,21 +1,5 @@
 import mongoose from "mongoose";
-import { Clients, Products } from "./db";
-
-class Client {
-  constructor(
-    id,
-    { name, lastName, company, emails, age, clientType, orders }
-  ) {
-    this.id = id;
-    this.name = name;
-    this.lastName = lastName;
-    this.company = company;
-    this.email = email;
-    this.age = age;
-    this.clientType = clientType;
-    this.orders = orders;
-  }
-}
+import { Clients, Products, Orders } from "./db";
 
 export const resolvers = {
   Query: {
@@ -160,6 +144,25 @@ export const resolvers = {
         Products.findOneAndDelete({ _id: id }, error => {
           if (error) reject(error);
           else resolve("The Product was deleted");
+        });
+      });
+    },
+    //create Order mutation
+    createOrder: (root, { input }) => {
+      const newOrder = new Orders({
+        order: input.order,
+        total: input.total,
+        orderDate: new Date(),
+        client: input.client,
+        state: "PENDING"
+      });
+
+      newOrder.id = newOrder._id;
+
+      return new Promise((resolve, reject) => {
+        newOrder.save(error => {
+          if (error) reject(error);
+          else resolve(newOrder);
         });
       });
     }

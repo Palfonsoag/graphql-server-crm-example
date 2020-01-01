@@ -7,11 +7,12 @@ enum ClientType {
 }
 
 """
-Order Input
+Set the state of an order
 """
-input OrderInput {
-  product: String
-  price: Int
+enum orderState {
+  PENDING
+  COMPLETED
+  CANCELED
 }
 
 """
@@ -46,18 +47,27 @@ input ProductInput {
 }
 
 """
+Order Input
+"""
+input OrderInput {
+  id: ID
+  order: [ProductOrderInput]
+  total: Int
+  orderDate: String
+  client: ID
+  state: orderState
+}
+
+input ProductOrderInput {
+  id: ID
+  volume: Int
+}
+
+"""
 Type of email
 """
 type Email {
   email: String
-}
-
-"""
-type of order
-"""
-type Order {
-  product: String
-  price: Int
 }
 
 """
@@ -84,6 +94,24 @@ type Product {
   stock: Int!
 }
 
+"""
+Fields for Order
+"""
+type Order {
+  id: ID
+  order: [ProductOrder]
+  total: Int
+  orderDate: String
+  client: ID
+  state: orderState
+}
+"""
+Fields for the products in the Order
+"""
+type ProductOrder {
+  id: ID
+  volume: Int
+}
 """
 Resolvers -> queries
 """
@@ -128,4 +156,7 @@ type Mutation {
 
   #Mutation to erase one Product
   deleteProduct(id: ID!): String
+
+  #Mutation to create new order
+  createOrder(input: OrderInput): Order
 }
