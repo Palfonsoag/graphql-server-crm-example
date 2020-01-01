@@ -160,6 +160,15 @@ export const resolvers = {
       newOrder.id = newOrder._id;
 
       return new Promise((resolve, reject) => {
+        input.order.forEach(order => {
+          Products.updateOne(
+            { _id: order.id },
+            { $inc: { stock: -order.volume } },
+            error => {
+              if (error) return new Error(error);
+            }
+          );
+        });
         newOrder.save(error => {
           if (error) reject(error);
           else resolve(newOrder);
