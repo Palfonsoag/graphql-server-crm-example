@@ -126,7 +126,7 @@ type Query {
   totalClients: String
 
   #Get the full list of products, limit and offset params are optionals, return an array of products
-  getProducts(limit: Int, offset: Int): [Product]
+  getProducts(limit: Int, offset: Int, stock: Boolean): [Product]
 
   #Get a Product given an ID. Return a single Product
   getProduct(id: ID!): Product

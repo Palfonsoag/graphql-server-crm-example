@@ -32,8 +32,12 @@ export const resolvers = {
 
     //get Products Query
 
-    getProducts: (root, { limit, offset }) => {
-      return Products.find({})
+    getProducts: (root, { limit, offset, stock }) => {
+      let filter = {};
+      if (stock) {
+        filter = { stock: { $gt: 0 } };
+      }
+      return Products.find(filter)
         .limit(limit)
         .skip(offset);
     },
