@@ -133,6 +133,9 @@ type Query {
 
   #get the count of product, return an string with the count
   totalProducts: String
+
+  #Get a client's orders
+  getOrdersByClient(client: String): [Order]
 }
 
 """

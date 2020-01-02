@@ -60,6 +60,16 @@ export const resolvers = {
           else resolve(count);
         });
       });
+    },
+    //get orders by client
+
+    getOrdersByClient: (root, { client }) => {
+      return new Promise((resolve, reject) => {
+        Orders.find({ client }, (error, orders) => {
+          if (error) reject(error);
+          else resolve(orders);
+        });
+      });
     }
   },
 
