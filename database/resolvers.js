@@ -188,6 +188,20 @@ export const resolvers = {
           else resolve(newOrder);
         });
       });
+    },
+    //update Order  state mutation
+    updateOrderState: (root, { input }) => {
+      return new Promise((resolve, reject) => {
+        Orders.findOneAndUpdate(
+          { _id: input.id },
+          input,
+          { new: true },
+          error => {
+            if (error) reject(error);
+            else resolve("The order State was updated successfully");
+          }
+        );
+      });
     }
   }
 };

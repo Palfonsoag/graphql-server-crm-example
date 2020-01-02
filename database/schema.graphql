@@ -162,4 +162,7 @@ type Mutation {
 
   #Mutation to create new order
   createOrder(input: OrderInput): Order
+
+  #Mutation to update an Order
+  updateOrderState(input: OrderInput): String
 }
