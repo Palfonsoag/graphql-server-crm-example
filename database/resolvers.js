@@ -70,6 +70,38 @@ export const resolvers = {
           else resolve(orders);
         });
       });
+    },
+
+    topClients: root => {
+      return new Promise((resolve, reject) => {
+        Orders.aggregate(
+          [
+            { $match: { state: "COMPLETED" } },
+            {
+              $group: {
+                _id: "$client",
+                total: { $sum: "$total" }
+              }
+            },
+            {
+              $lookup: {
+                from: "clients",
+                localField: "_id",
+                foreignField: "_id",
+                as: "client"
+              }
+            },
+            {
+              $sort: { total: -1 }
+            },
+            { $limit: 10 }
+          ],
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+      });
     }
   },
 

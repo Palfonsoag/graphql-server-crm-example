@@ -64,6 +64,14 @@ input ProductOrderInput {
 }
 
 """
+Type of TopBuyers
+"""
+type TopBuyers {
+  total: Float
+  client: [Client]
+}
+
+"""
 Type of email
 """
 type Email {
@@ -136,6 +144,9 @@ type Query {
 
   #Get a client's orders
   getOrdersByClient(client: String): [Order]
+
+  #get top 10 buyers
+  topClients: [TopBuyers]
 }
 
 """
