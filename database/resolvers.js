@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 import { Clients, Products, Orders, Users } from "./db";
+
+dotenv.config({ path: "variables.env" });
+
+const createToken = (userLogged, secret, expiration) => {
+  const { user } = userLogged;
+  return jwt.sign({ user }, secret, { expiresIn: expiration });
+};
 
 export const resolvers = {
   Query: {
@@ -257,8 +267,24 @@ export const resolvers = {
         user: input.user,
         password: input.password
       }).save();
-      console.log(newUser);
+      // console.log(newUser);
       return "The user was created successfully";
+    },
+
+    userAuthentication: async (root, { user, password }) => {
+      const userName = await Users.findOne({ user });
+
+      if (!userName) {
+        throw new Error("The user is not registered");
+      }
+
+      const passwordCheck = await bcrypt.compare(password, userName.password);
+
+      if (!passwordCheck) {
+        throw new Error("wrong password");
+      }
+
+      return { token: createToken(userName, process.env.SECRET, "1hr") };
     }
   }
 };

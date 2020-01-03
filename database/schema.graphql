@@ -80,6 +80,13 @@ type TopBuyers {
 }
 
 """
+Type of Token
+"""
+type Token {
+  token: String!
+}
+
+"""
 Type of email
 """
 type Email {
@@ -187,4 +194,7 @@ type Mutation {
 
   #Mutation to create new users
   createUser(input: UserInput): String
+
+  #Mutation to authenticate an user
+  userAuthentication(user: String!, password: String!): Token
 }
