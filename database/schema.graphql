@@ -37,6 +37,14 @@ input ClientInput {
 }
 
 """
+User Input
+"""
+input UserInput {
+  user: String!
+  password: String!
+}
+
+"""
 Products Input
 """
 input ProductInput {
@@ -176,4 +184,7 @@ type Mutation {
 
   #Mutation to update an Order
   updateOrderState(input: OrderInput): String
+
+  #Mutation to create new users
+  createUser(input: UserInput): String
 }

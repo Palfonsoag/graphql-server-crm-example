@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
 mongoose.Promise = global.Promise;
 
 mongoose.connect("mongodb://localhost/clients", { useNewUrlParser: true });
 
-const clientsSchema = new mongoose.Schema({
+const clientSchema = new mongoose.Schema({
   name: String,
   lastName: String,
   company: String,
@@ -14,15 +15,15 @@ const clientsSchema = new mongoose.Schema({
   orders: Array
 });
 
-const Clients = mongoose.model("clients", clientsSchema);
+const Clients = mongoose.model("clients", clientSchema);
 
-const productsSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
   name: String,
   price: Number,
   stock: Number
 });
 
-const Products = mongoose.model("products", productsSchema);
+const Products = mongoose.model("products", productSchema);
 
 const orderSchema = new mongoose.Schema({
   order: Array,
@@ -34,4 +35,26 @@ const orderSchema = new mongoose.Schema({
 
 const Orders = mongoose.model("orders", orderSchema);
 
-export { Clients, Products, Orders };
+const userSchema = new mongoose.Schema({
+  user: String,
+  password: String
+});
+
+userSchema.pre("save", function(next) {
+  if (!this.isModified("password")) {
+    return next;
+  }
+
+  bcrypt.genSalt(10, (error, salt) => {
+    if (error) return next(error);
+    bcrypt.hash(this.password, salt, (err, hash) => {
+      if (err) return next(err);
+      this.password = hash;
+      next();
+    });
+  });
+});
+
+const Users = mongoose.model("users", userSchema);
+
+export { Clients, Products, Orders, Users };
