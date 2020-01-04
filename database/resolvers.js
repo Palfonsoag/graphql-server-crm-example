@@ -82,6 +82,8 @@ export const resolvers = {
       });
     },
 
+    //get top 10 buyers
+
     topClients: root => {
       return new Promise((resolve, reject) => {
         Orders.aggregate(
@@ -112,6 +114,20 @@ export const resolvers = {
           }
         );
       });
+    },
+
+    //get orders by client
+
+    getLoggedUser: (root, args, { currentUser }) => {
+      if (!currentUser) {
+        return null;
+      }
+
+      console.log(currentUser);
+
+      const user = Users.findOne({ user: currentUser.user });
+
+      return user;
     }
   },
 
