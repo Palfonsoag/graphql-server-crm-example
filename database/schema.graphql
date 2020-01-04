@@ -67,6 +67,7 @@ input OrderInput {
   orderDate: String
   client: ID
   state: orderState
+  seller: ID
 }
 
 input ProductOrderInput {
