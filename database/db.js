@@ -31,7 +31,8 @@ const orderSchema = new mongoose.Schema({
   total: Number,
   orderDate: Date,
   client: mongoose.Types.ObjectId,
-  state: String
+  state: String,
+  seller: mongoose.Types.ObjectId
 });
 
 const Orders = mongoose.model("orders", orderSchema);
