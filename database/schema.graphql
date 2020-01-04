@@ -42,6 +42,8 @@ User Input
 input UserInput {
   user: String!
   password: String!
+  name: String!
+  rol: String!
 }
 
 """

@@ -37,7 +37,9 @@ const Orders = mongoose.model("orders", orderSchema);
 
 const userSchema = new mongoose.Schema({
   user: String,
-  password: String
+  name: String,
+  password: String,
+  rol: String
 });
 
 userSchema.pre("save", function(next) {

@@ -281,7 +281,9 @@ export const resolvers = {
 
       const newUser = await new Users({
         user: input.user,
-        password: input.password
+        password: input.password,
+        name: input.name,
+        rol: input.rol
       }).save();
       // console.log(newUser);
       return "The user was created successfully";
