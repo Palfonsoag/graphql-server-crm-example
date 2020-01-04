@@ -123,7 +123,7 @@ export const resolvers = {
         return null;
       }
 
-      console.log(currentUser);
+      //console.log(currentUser);
 
       const user = Users.findOne({ user: currentUser.user });
 
