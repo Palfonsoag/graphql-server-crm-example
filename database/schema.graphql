@@ -167,7 +167,7 @@ type Query {
   getClients(limit: Int, offset: Int, seller: String): [Client]
 
   #get the count of clients, return an string with the count
-  totalClients: String
+  totalClients(seller: String): String
 
   #Get the full list of products, limit and offset params are optionals, return an array of products
   getProducts(limit: Int, offset: Int, stock: Boolean): [Product]

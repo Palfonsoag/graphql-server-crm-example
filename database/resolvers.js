@@ -37,9 +37,13 @@ export const resolvers = {
     },
 
     //get Clients count Query
-    totalClients: root => {
+    totalClients: (root, { seller }) => {
+      let filter = {};
+      if (seller) {
+        filter = { seller: new ObjectId(seller) };
+      }
       return new Promise((resolve, reject) => {
-        Clients.countDocuments({}, (error, count) => {
+        Clients.countDocuments(filter, (error, count) => {
           if (error) reject(error);
           else resolve(count);
         });
