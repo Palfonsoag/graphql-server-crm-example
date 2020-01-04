@@ -141,7 +141,8 @@ export const resolvers = {
         emails: input.emails,
         age: input.age,
         clientType: input.clientType,
-        orders: input.orders
+        orders: input.orders,
+        seller: input.seller
       });
       newClient.id = newClient._id;
       return new Promise((resolve, reject) => {

@@ -34,6 +34,7 @@ input ClientInput {
   age: Int!
   clientType: ClientType!
   orders: [OrderInput]
+  seller: ID
 }
 
 """
@@ -91,7 +92,10 @@ type Token {
 Type of User
 """
 type User {
+  id: ID
   user: String
+  name: String
+  rol: String
 }
 
 """
