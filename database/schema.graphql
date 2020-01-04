@@ -7,11 +7,12 @@ enum ClientType {
 }
 
 """
-Order Input
+Set the state of an order
 """
-input OrderInput {
-  product: String
-  price: Int
+enum orderState {
+  PENDING
+  COMPLETED
+  CANCELED
 }
 
 """
@@ -33,6 +34,17 @@ input ClientInput {
   age: Int!
   clientType: ClientType!
   orders: [OrderInput]
+  seller: ID
+}
+
+"""
+User Input
+"""
+input UserInput {
+  user: String!
+  password: String!
+  name: String!
+  rol: String!
 }
 
 """
@@ -46,18 +58,60 @@ input ProductInput {
 }
 
 """
+Order Input
+"""
+input OrderInput {
+  id: ID
+  order: [ProductOrderInput]
+  total: Int
+  orderDate: String
+  client: ID
+  state: orderState
+  seller: ID
+}
+
+input ProductOrderInput {
+  id: ID
+  volume: Int
+}
+
+"""
+Type of TopBuyers
+"""
+type TopBuyers {
+  total: Float
+  client: [Client]
+}
+
+"""
+Type of TopSellers
+"""
+type TopSellers {
+  total: Float
+  seller: [User]
+}
+
+"""
+Type of Token
+"""
+type Token {
+  token: String!
+}
+"""
+Type of User
+"""
+type User {
+  id: ID
+  user: String
+  name: String
+  rol: String
+}
+
+"""
 Type of email
 """
 type Email {
   email: String
-}
-
-"""
-type of order
-"""
-type Order {
-  product: String
-  price: Int
 }
 
 """
@@ -85,6 +139,24 @@ type Product {
 }
 
 """
+Fields for Order
+"""
+type Order {
+  id: ID
+  order: [ProductOrder]
+  total: Int
+  orderDate: String
+  client: ID
+  state: orderState
+}
+"""
+Fields for the products in the Order
+"""
+type ProductOrder {
+  id: ID
+  volume: Int
+}
+"""
 Resolvers -> queries
 """
 type Query {
@@ -92,19 +164,31 @@ type Query {
   getClient(id: ID!): Client
 
   #Get the full list of clients, limit and offset params are optionals, return an array of clients
-  getClients(limit: Int, offset: Int): [Client]
+  getClients(limit: Int, offset: Int, seller: String): [Client]
 
   #get the count of clients, return an string with the count
-  totalClients: String
+  totalClients(seller: String): String
 
   #Get the full list of products, limit and offset params are optionals, return an array of products
-  getProducts(limit: Int, offset: Int): [Product]
+  getProducts(limit: Int, offset: Int, stock: Boolean): [Product]
 
   #Get a Product given an ID. Return a single Product
   getProduct(id: ID!): Product
 
   #get the count of product, return an string with the count
   totalProducts: String
+
+  #Get a client's orders
+  getOrdersByClient(client: String): [Order]
+
+  #get top 10 buyers
+  topClients: [TopBuyers]
+
+  #get current user
+  getLoggedUser: User
+
+  #get top 10 sellers
+  topSellers: [TopSellers]
 }
 
 """
@@ -128,4 +212,16 @@ type Mutation {
 
   #Mutation to erase one Product
   deleteProduct(id: ID!): String
+
+  #Mutation to create new order
+  createOrder(input: OrderInput): Order
+
+  #Mutation to update an Order
+  updateOrderState(input: OrderInput): String
+
+  #Mutation to create new users
+  createUser(input: UserInput): String
+
+  #Mutation to authenticate an user
+  userAuthentication(user: String!, password: String!): Token
 }
