@@ -6,6 +6,8 @@ import { Clients, Products, Orders, Users } from "./db";
 
 dotenv.config({ path: "variables.env" });
 
+const ObjectId = mongoose.Types.ObjectId;
+
 const createToken = (userLogged, secret, expiration) => {
   const { user } = userLogged;
   return jwt.sign({ user }, secret, { expiresIn: expiration });
@@ -24,8 +26,12 @@ export const resolvers = {
     },
 
     //get Clients Query
-    getClients: (root, { limit, offset }) => {
-      return Clients.find({})
+    getClients: (root, { limit, offset, seller }) => {
+      let filter = {};
+      if (seller) {
+        filter = { seller: new ObjectId(seller) };
+      }
+      return Clients.find(filter)
         .limit(limit)
         .skip(offset);
     },

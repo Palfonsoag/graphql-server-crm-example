@@ -155,7 +155,7 @@ type Query {
   getClient(id: ID!): Client
 
   #Get the full list of clients, limit and offset params are optionals, return an array of clients
-  getClients(limit: Int, offset: Int): [Client]
+  getClients(limit: Int, offset: Int, seller: String): [Client]
 
   #get the count of clients, return an string with the count
   totalClients: String
