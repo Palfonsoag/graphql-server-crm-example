@@ -122,6 +122,40 @@ export const resolvers = {
       });
     },
 
+    //get top 10 sellers
+
+    topSellers: root => {
+      return new Promise((resolve, reject) => {
+        Orders.aggregate(
+          [
+            { $match: { state: "COMPLETED" } },
+            {
+              $group: {
+                _id: "$seller",
+                total: { $sum: "$total" }
+              }
+            },
+            {
+              $lookup: {
+                from: "users",
+                localField: "_id",
+                foreignField: "_id",
+                as: "seller"
+              }
+            },
+            {
+              $sort: { total: -1 }
+            },
+            { $limit: 10 }
+          ],
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+      });
+    },
+
     //get orders by client
 
     getLoggedUser: (root, args, { currentUser }) => {

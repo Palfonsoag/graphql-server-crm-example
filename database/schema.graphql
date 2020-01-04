@@ -84,6 +84,14 @@ type TopBuyers {
 }
 
 """
+Type of TopSellers
+"""
+type TopSellers {
+  total: Float
+  seller: [User]
+}
+
+"""
 Type of Token
 """
 type Token {
@@ -178,6 +186,9 @@ type Query {
 
   #get current user
   getLoggedUser: User
+
+  #get top 10 sellers
+  topSellers: [TopSellers]
 }
 
 """
