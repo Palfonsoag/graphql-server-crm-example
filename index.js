@@ -30,7 +30,7 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-app.listen({ port: 4000 }, () =>
+app.listen({ port: process.env.PORT }, () =>
   console.log(
     `The server is running on http://localhost:4000${server.graphqlPath}`
   )
