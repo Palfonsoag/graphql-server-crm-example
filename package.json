@@ -6,6 +6,9 @@
   "scripts": {
     "start": "nodemon ./index.js --exec babel-node -e js"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "author": "Pedro Alfonso Garcia",
   "license": "ISC",
   "dependencies": {
